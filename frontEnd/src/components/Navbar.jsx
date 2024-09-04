@@ -9,12 +9,22 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+  const handleHome = () => {
+    navigate("/");
+  };
   return (
     <Flex minWidth="max-content" alignItems="center" gap={2} shadow="lg" p={5}>
       <Box p={2}>
-        <Heading color="gray.600" fontSize="xx-large">
+        <Heading
+          as="button"
+          onClick={handleHome}
+          color="gray.600"
+          fontSize="xx-large"
+        >
           <Box as="span" color="orange.400">
             Financial
           </Box>{" "}
