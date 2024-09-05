@@ -1,15 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputComponent from "../components/InputComponent";
 import { Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import SelectPaymentMethod from "../components/SelectPaymentMethod";
 import SelectCategory from "../components/SelectCategory";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FinancialService from "../services/financial.service";
 import Swal from "sweetalert2";
 
-const Add = () => {
+const Edit = () => {
   const navigate = useNavigate();
   const userId = "u01";
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    FinancialService.getFinancialbyId(id).then((response) => {
+      if (response.status === 200) {
+        setFinancial(response.data);
+      }
+    });
+  }, [id]);
+
   const [financial, setFinancial] = useState({
     userId: userId,
     description: "",
@@ -38,7 +49,7 @@ const Add = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await FinancialService.addFinancial(financial);
+      const response = await FinancialService.updateFinancial(id, financial);
       if (response.status === 200) {
         Swal.fire({
           position: "center",
@@ -77,7 +88,7 @@ const Add = () => {
       h="75vh"
       justifyContent="center"
     >
-      <Heading mb={5}>Add Financial Record</Heading>
+      <Heading mb={5}>Edit Financial Record</Heading>
       <InputComponent
         type="text"
         label="Description :"
@@ -115,12 +126,12 @@ const Add = () => {
         <Button colorScheme="red" onClick={handleCancel}>
           Cancel
         </Button>
-        <Button colorScheme="green" onClick={handleSubmit}>
-          Add a record
+        <Button colorScheme="orange" onClick={handleSubmit}>
+          Edit a record
         </Button>
       </ButtonGroup>
     </VStack>
   );
 };
 
-export default Add;
+export default Edit;

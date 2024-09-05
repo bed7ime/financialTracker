@@ -1,5 +1,5 @@
 import api from "./api";
-const FINANCIAL_API = import.meta.VITE_FINANCIALS_API;
+const FINANCIAL_API = import.meta.env.VITE_FINANCIALS_API;
 
 const getAllFinancial = async () => {
   return await api.get(FINANCIAL_API);
@@ -18,7 +18,7 @@ const addFinancial = async (financial) => {
 };
 
 const updateFinancial = async (id, financial) => {
-  return await api.put(FINANCIAL_API + `${id}`, financial);
+  return await api.put(FINANCIAL_API + `/${id}`, financial);
 };
 
 const deleteFinancialbyId = async (id) => {

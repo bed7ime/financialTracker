@@ -2,14 +2,19 @@ import {
   Box,
   Button,
   ButtonGroup,
-  Center,
   Flex,
   Heading,
-  HStack,
   Spacer,
 } from "@chakra-ui/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import {
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/clerk-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -33,13 +38,28 @@ const Navbar = () => {
       </Box>
       <Spacer />
       <ButtonGroup gap="2">
-        {" "}
-        <Button color="orange.400" size="lg">
-          Sign in
-        </Button>
-        <Button color="green.700" size="lg">
-          Sign up
-        </Button>
+        <SignedOut>
+          {" "}
+          <Button
+            color="orange.400"
+            size="lg"
+            colorScheme="orange"
+            variant="ghost"
+          >
+            <SignInButton mode="modal" />
+          </Button>
+          <Button
+            color="green.700"
+            size="lg"
+            variant="outline"
+            colorScheme="green"
+          >
+            <SignUpButton mode="modal" />{" "}
+          </Button>{" "}
+        </SignedOut>
+        <SignedIn>
+          <UserButton />
+        </SignedIn>
       </ButtonGroup>
     </Flex>
   );
