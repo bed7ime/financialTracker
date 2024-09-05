@@ -21,7 +21,7 @@ const Edit = () => {
     });
   }, [id]);
 
-  const [financial, setFinancial] = useState({
+  const [record, setRecord] = useState({
     userId: userId,
     description: "",
     date: "",
@@ -32,11 +32,11 @@ const Edit = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFinancial(() => ({ ...financial, [name]: value }));
+    setRecord(() => ({ ...record, [name]: value }));
   };
 
   const handleCancel = () => {
-    setFinancial({
+    setRecord({
       userId: userId,
       description: "",
       date: "",
@@ -49,7 +49,7 @@ const Edit = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await FinancialService.updateFinancial(id, financial);
+      const response = await FinancialService.updateFinancial(id, record);
       if (response.status === 200) {
         Swal.fire({
           position: "center",
@@ -58,7 +58,7 @@ const Edit = () => {
           text: response.data.message || "Financial record added successfully.",
           timer: 1500,
         }).then(() => {
-          setFinancial({
+          setRecord({
             userId: userId,
             description: "",
             date: "",
@@ -94,31 +94,31 @@ const Edit = () => {
         label="Description :"
         placeholder="The description of your financial."
         name="description"
-        value={financial.description}
+        value={record.description}
         onChange={handleChange}
       />
       <InputComponent
         type="date"
         label="Date :"
         name="date"
-        value={financial.date}
+        value={record.date}
         onChange={handleChange}
       />
       <InputComponent
         type="number"
         label="Amount :"
         name="amount"
-        value={financial.amount}
+        value={record.amount}
         onChange={handleChange}
       />
       <SelectCategory
         name="category"
-        value={financial.category}
+        value={record.category}
         onChange={handleChange}
       />
       <SelectPaymentMethod
         name="paymentMethod"
-        value={financial.paymentMethod}
+        value={record.paymentMethod}
         onChange={handleChange}
       />
       <ButtonGroup gap={4} mt={4}>

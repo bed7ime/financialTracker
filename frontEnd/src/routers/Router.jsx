@@ -1,9 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import Home from "../pages/Home";
 import DefaultLayout from "../components/DefaultLayout";
-import Add from "../pages/Add";
 import Edit from "../pages/Edit";
 import Dashboard from "../pages/dashboard";
+import { FinancialRecordProvider } from "../contexts/financial.context";
 
 const router = createBrowserRouter([
   {
@@ -15,16 +15,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "add",
-        element: <Add />,
-      },
-      {
         path: "edit/:id",
         element: <Edit />,
       },
       {
         path: "dashboard",
-        element: <Dashboard />,
+        element: (
+          <FinancialRecordProvider>
+            <Dashboard />
+          </FinancialRecordProvider>
+        ),
       },
     ],
   },

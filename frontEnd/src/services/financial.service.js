@@ -13,12 +13,12 @@ const getFinancialbyUserId = async (userId) => {
   return await api.get(FINANCIAL_API + `/user/${userId}`);
 };
 
-const addFinancial = async (financial) => {
-  return await api.post(FINANCIAL_API, financial);
+const addFinancial = async (record) => {
+  return await api.post(FINANCIAL_API, record);
 };
 
-const updateFinancial = async (id, financial) => {
-  return await api.put(FINANCIAL_API + `/${id}`, financial);
+const updateFinancial = async (id, record) => {
+  return await api.put(FINANCIAL_API + `/${id}`, record);
 };
 
 const deleteFinancialbyId = async (id) => {
