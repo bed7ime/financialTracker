@@ -8,7 +8,11 @@ import { FinancialRecordProvider } from "../contexts/financial.context";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <DefaultLayout />,
+    element: (
+      <FinancialRecordProvider>
+        <DefaultLayout />
+      </FinancialRecordProvider>
+    ),
     children: [
       {
         path: "",
@@ -20,11 +24,7 @@ const router = createBrowserRouter([
       },
       {
         path: "dashboard",
-        element: (
-          <FinancialRecordProvider>
-            <Dashboard />
-          </FinancialRecordProvider>
-        ),
+        element: <Dashboard />,
       },
     ],
   },

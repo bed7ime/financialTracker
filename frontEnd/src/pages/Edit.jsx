@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import InputComponent from "../components/InputComponent";
-import { Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import SelectPaymentMethod from "../components/SelectPaymentMethod";
 import SelectCategory from "../components/SelectCategory";
 import { useNavigate, useParams } from "react-router-dom";
@@ -26,7 +26,7 @@ const Edit = () => {
     description: "",
     date: "",
     amount: 0,
-    category: "Deposit",
+    category: "Food",
     paymentMethod: "PromptPay",
   });
 
@@ -41,45 +41,13 @@ const Edit = () => {
       description: "",
       date: "",
       amount: 0,
-      category: "Deposit",
+      category: "Food",
       paymentMethod: "PromptPay",
     });
     navigate("/");
   };
 
-  const handleSubmit = async () => {
-    try {
-      const response = await FinancialService.updateFinancial(id, record);
-      if (response.status === 200) {
-        Swal.fire({
-          position: "center",
-          icon: "success",
-          title: `Financial adding`,
-          text: response.data.message || "Financial record added successfully.",
-          timer: 1500,
-        }).then(() => {
-          setRecord({
-            userId: userId,
-            description: "",
-            date: "",
-            amount: 0,
-            category: "Deposit",
-            paymentMethod: "PromptPay",
-          });
-          navigate("/");
-        });
-      }
-    } catch (error) {
-      Swal.fire({
-        position: "center",
-        icon: "error",
-        title: `Financial adding`,
-        text:
-          error?.response?.data?.message || "Failed to add financial record!",
-        timer: 1500,
-      });
-    }
-  };
+  const handleSubmit = async () => {};
   return (
     <VStack
       as="form"
@@ -88,7 +56,12 @@ const Edit = () => {
       h="75vh"
       justifyContent="center"
     >
-      <Heading mb={5}>Edit Financial Record</Heading>
+      <Heading mb={5}>
+        <Box as="span" color="orange">
+          Edit
+        </Box>{" "}
+        Financial Record
+      </Heading>
       <InputComponent
         type="text"
         label="Description :"

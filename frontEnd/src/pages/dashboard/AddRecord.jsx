@@ -1,4 +1,4 @@
-import { Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import InputComponent from "../../components/InputComponent";
 import SelectCategory from "../../components/SelectCategory";
 import SelectPaymentMethod from "../../components/SelectPaymentMethod";
@@ -11,7 +11,7 @@ const AddRecord = () => {
     description: "",
     date: "",
     amount: 0,
-    category: "Deposit",
+    category: "Food",
     paymentMethod: "PromptPay",
   });
   const { user } = useUser();
@@ -34,7 +34,7 @@ const AddRecord = () => {
       description: "",
       date: "",
       amount: 0,
-      category: "Deposit",
+      category: "Food",
       paymentMethod: "PromptPay",
     });
   };
@@ -47,7 +47,12 @@ const AddRecord = () => {
       h="75vh"
       justifyContent="center"
     >
-      <Heading mb={5}>Add Financial Record</Heading>
+      <Heading mb={5}>
+        <Box as="span" color="green">
+          Add
+        </Box>{" "}
+        Financial Record
+      </Heading>
       <InputComponent
         type="text"
         label="Description :"

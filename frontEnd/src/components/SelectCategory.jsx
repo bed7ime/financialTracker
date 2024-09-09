@@ -6,9 +6,10 @@ const SelectCategory = ({ name, value, onChange }) => {
     <FormControl>
       <FormLabel>Category :</FormLabel>
       <Select name={name} value={value} onChange={onChange}>
-        <option value="Deposit">Deposit</option>
-        <option value="Withdraw">Withdraw</option>
-        <option value="Transfer">Transfer</option>
+        <option value="Food">Food</option>
+        <option value="Service">Service</option>
+        <option value="Transport">Transport</option>
+        <option value="Hotel">Hotel</option>
       </Select>
     </FormControl>
   );

@@ -16,15 +16,24 @@ import {
   Flex,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
 import { useFinancialRecords } from "../../contexts/financial.context";
 import { useUser } from "@clerk/clerk-react";
 import AddRecord from "./AddRecord";
+import { useMemo } from "react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const { user } = useUser();
   const { records } = useFinancialRecords();
+
+  const totalAmount = useMemo(() => {
+    let total = 0;
+    records.forEach((record) => {
+      const amount = parseFloat(record.amount);
+      total += amount;
+    });
+    return total;
+  }, [records]);
 
   const handleEdit = (id) => {
     navigate(`/edit/${id}`);
@@ -36,7 +45,7 @@ const Dashboard = () => {
     <VStack
       as="form"
       mx="auto"
-      w={{ base: "90%", md: 2000 }}
+      w={{ base: "90%", md: 500 }}
       h="90vh"
       justifyContent="center"
     >
@@ -49,10 +58,20 @@ const Dashboard = () => {
         rounded={10}
       >
         <Box>
-          <Text mb={2}>Welcome, {user?.firstName}</Text>
           <AddRecord />
         </Box>
-        <Box>
+        <Box textAlign="center">
+          <Text fontSize="large" mb={6}>
+            Welcome,{" "}
+            <Box as="span" color="orange">
+              {user?.firstName}
+            </Box>{" "}
+            : Total amount :{" "}
+            <Box as="span" color="green">
+              {totalAmount}
+            </Box>
+            ฿
+          </Text>
           <TableContainer overflow="auto">
             <Table>
               <TableCaption>Financial Records</TableCaption>
