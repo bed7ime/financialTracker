@@ -4,40 +4,46 @@ import { Box, Button, ButtonGroup, Heading, VStack } from "@chakra-ui/react";
 import SelectPaymentMethod from "../components/SelectPaymentMethod";
 import SelectCategory from "../components/SelectCategory";
 import { useNavigate, useParams } from "react-router-dom";
-import FinancialService from "../services/financial.service";
-import Swal from "sweetalert2";
+import { useFinancialRecords } from "../contexts/financial.context";
 
 const Edit = () => {
-  const navigate = useNavigate();
-  const userId = "u01";
-
-  const { id } = useParams();
-
-  useEffect(() => {
-    FinancialService.getFinancialbyId(id).then((response) => {
-      if (response.status === 200) {
-        setFinancial(response.data);
-      }
-    });
-  }, [id]);
-
+  const { records, updateRecord } = useFinancialRecords();
   const [record, setRecord] = useState({
-    userId: userId,
     description: "",
     date: "",
     amount: 0,
     category: "Food",
     paymentMethod: "PromptPay",
   });
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const recordId = Number(id);
+    const record = records.find((record) => record.id === recordId);
+    if (record) {
+      const formattedDate = new Date(record.date).toISOString().split("T")[0];
+      setRecord({ ...record, date: formattedDate });
+    }
+  }, [id, records]);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setRecord(() => ({ ...record, [name]: value }));
+    setRecord({ ...record, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await updateRecord(id, record);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleCancel = () => {
     setRecord({
-      userId: userId,
+      userId: "",
       description: "",
       date: "",
       amount: 0,
@@ -47,7 +53,6 @@ const Edit = () => {
     navigate("/");
   };
 
-  const handleSubmit = async () => {};
   return (
     <VStack
       as="form"

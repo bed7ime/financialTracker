@@ -10,7 +10,7 @@ const getFinancialbyId = async (id) => {
 };
 
 const getFinancialbyUserId = async (userId) => {
-  return await api.get(FINANCIAL_API + `/user/${userId}`);
+  return await api.get(FINANCIAL_API + `/users/${userId}`);
 };
 
 const addFinancial = async (record) => {

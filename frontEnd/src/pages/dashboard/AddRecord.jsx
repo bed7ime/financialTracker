@@ -7,23 +7,34 @@ import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 
 const AddRecord = () => {
+  const { user } = useUser();
+
   const [record, setRecord] = useState({
+    userId: "",
     description: "",
     date: "",
     amount: 0,
     category: "Food",
     paymentMethod: "PromptPay",
   });
-  const { user } = useUser();
   const { addRecord } = useFinancialRecords();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRecord(() => ({ ...record, [name]: value }));
+    setRecord(() => ({ ...record, [name]: value, userId: user.id }));
   };
 
   const handleSubmit = async () => {
     try {
+      addRecord(record);
+      setRecord({
+        userId: "",
+        description: "",
+        date: "",
+        amount: 0,
+        category: "Food",
+        paymentMethod: "PromptPay",
+      });
     } catch (error) {
       console.log(error);
     }
@@ -31,6 +42,7 @@ const AddRecord = () => {
 
   const handleClear = () => {
     setRecord({
+      userId: "",
       description: "",
       date: "",
       amount: 0,

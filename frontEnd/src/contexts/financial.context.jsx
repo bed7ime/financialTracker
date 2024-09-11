@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import FinancialService from "../services/financial.service";
 import { useUser } from "@clerk/clerk-react";
+import Swal from "sweetalert2";
 
 export const FinancialRecordContext = createContext();
 
@@ -27,6 +28,13 @@ export const FinancialRecordProvider = ({ children }) => {
       const response = await FinancialService.addFinancial(record);
       if (response.status === 200) {
         setRecords((prev) => [...prev, response.data]);
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your financial has been added!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -46,6 +54,13 @@ export const FinancialRecordProvider = ({ children }) => {
             }
           })
         );
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your financial has been updated!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     } catch (error) {
       console.log(error);
@@ -57,6 +72,15 @@ export const FinancialRecordProvider = ({ children }) => {
       const response = await FinancialService.deleteFinancialbyId(id);
       if (response.status === 200) {
         setRecords((prev) => prev.filter((record) => record.id !== id));
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Your financial has been deleted!",
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => {
+          window.location.reload();
+        });
       }
     } catch (error) {
       console.log(error);
