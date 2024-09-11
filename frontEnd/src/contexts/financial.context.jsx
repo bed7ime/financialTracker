@@ -75,17 +75,16 @@ export const FinancialRecordProvider = ({ children }) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your financial has been deleted!",
+          title: "Your financial record has been deleted!",
           showConfirmButton: false,
           timer: 1500,
-        }).then(() => {
-          window.location.reload();
         });
       }
     } catch (error) {
       console.log(error);
     }
   };
+
   return (
     <FinancialRecordContext.Provider
       value={{ records, addRecord, updateRecord, deleteRecord }}
