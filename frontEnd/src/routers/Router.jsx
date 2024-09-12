@@ -4,6 +4,7 @@ import DefaultLayout from "../components/DefaultLayout";
 import Edit from "../pages/Edit";
 import Dashboard from "../pages/dashboard";
 import { FinancialRecordProvider } from "../contexts/financial.context";
+import RouterProtected from "./RouterProtected";
 
 const router = createBrowserRouter([
   {
@@ -18,7 +19,9 @@ const router = createBrowserRouter([
         path: "edit/:id",
         element: (
           <FinancialRecordProvider>
-            <Edit />{" "}
+            <RouterProtected>
+              <Edit />{" "}
+            </RouterProtected>
           </FinancialRecordProvider>
         ),
       },

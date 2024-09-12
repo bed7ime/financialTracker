@@ -60,7 +60,7 @@ const AddRecord = () => {
       justifyContent="center"
     >
       <Heading mb={5}>
-        <Box as="span" color="green">
+        <Box as="span" color="gray.600">
           Add
         </Box>{" "}
         Financial Record

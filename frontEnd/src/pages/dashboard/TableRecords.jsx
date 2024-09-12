@@ -12,7 +12,7 @@ import {
   ButtonGroup,
   Button,
 } from "@chakra-ui/react";
-import { useFinancialRecords } from "../contexts/financial.context";
+import { useFinancialRecords } from "../../contexts/financial.context";
 import { useNavigate } from "react-router-dom";
 
 const TableRecords = () => {
@@ -33,14 +33,20 @@ const TableRecords = () => {
     return date.toLocaleDateString("en-US", options);
   };
 
+  const formatUserId = (userId) => {
+    if (!userId || userId.length <= 6) return userId;
+    const front = userId.substring(0, 4);
+    const back = userId.substring(userId.length - 3);
+    return `${front}...${back}`;
+  };
+
   return (
-    <TableContainer overflow="auto" maxWidth="800px">
+    <TableContainer overflowY="scroll" maxHeight="25rem" maxWidth="75rem">
       <Table>
         <TableCaption>Financial Records</TableCaption>
         <Thead>
           <Tr>
             <Th>Id</Th>
-            <Th>User Id</Th>
             <Th>Description</Th>
             <Th>Date</Th>
             <Th>Amount</Th>
@@ -55,7 +61,6 @@ const TableRecords = () => {
               <Tr key={record.id}>
                 {" "}
                 <Td>{record.id}</Td>
-                <Td>{record.userId}</Td>
                 <Td>{record.description}</Td>
                 <Td>{ADate(record.date)}</Td>
                 <Td>{record.amount}</Td>

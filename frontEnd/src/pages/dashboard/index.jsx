@@ -1,14 +1,9 @@
-import {
-  VStack,
-  Text,
-  Box,
-  Flex,
-} from "@chakra-ui/react";
+import { VStack, Text, Box, Flex } from "@chakra-ui/react";
 import { useFinancialRecords } from "../../contexts/financial.context";
 import { useUser } from "@clerk/clerk-react";
 import AddRecord from "./AddRecord";
 import { useMemo } from "react";
-import TableRecords from "../../components/TableRecords";
+import TableRecords from "./TableRecords";
 
 const Dashboard = () => {
   const { user } = useUser();

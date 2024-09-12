@@ -11,7 +11,7 @@ export const FinancialRecordProvider = ({ children }) => {
   const fetchRecords = async () => {
     if (!user) return;
     try {
-      const response = FinancialService.getFinancialbyUserId(user.id);
+      const response = await FinancialService.getFinancialbyUserId(user.id);
       if (response.status === 200) {
         setRecords(response.data);
       }
@@ -31,7 +31,8 @@ export const FinancialRecordProvider = ({ children }) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your financial has been added!",
+          title: "Add financial",
+          text: "Your record has been added!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -57,7 +58,8 @@ export const FinancialRecordProvider = ({ children }) => {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your financial has been updated!",
+          title: "Update financial",
+          text: "Your record has been updated!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -71,13 +73,23 @@ export const FinancialRecordProvider = ({ children }) => {
     try {
       const response = await FinancialService.deleteFinancialbyId(id);
       if (response.status === 200) {
-        setRecords((prev) => prev.filter((record) => record.id !== id));
         Swal.fire({
-          position: "center",
-          icon: "success",
-          title: "Your financial record has been deleted!",
-          showConfirmButton: false,
-          timer: 1500,
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#2b6cb0",
+          cancelButtonColor: "#C53030",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            setRecords((prev) => prev.filter((record) => record.id !== id));
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your record has been deleted.",
+              icon: "success",
+            });
+          }
         });
       }
     } catch (error) {

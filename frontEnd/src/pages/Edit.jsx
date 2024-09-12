@@ -62,7 +62,7 @@ const Edit = () => {
       justifyContent="center"
     >
       <Heading mb={5}>
-        <Box as="span" color="orange">
+        <Box as="span" color="gray.600">
           Edit
         </Box>{" "}
         Financial Record

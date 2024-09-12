@@ -29,7 +29,7 @@ const Financial = sequelize.define("financial", {
   },
 });
 
-Financial.sync({ force: false })
+Financial.sync({ force: true })
   .then(() => {
     console.log("Created a table or already have one?");
   })
